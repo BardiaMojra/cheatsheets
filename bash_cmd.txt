@@ -1,3 +1,12 @@
 // Show system log (journal)
 sudo journalctl -xe
 
+// Fork out a child process and set separate pid under different parent process - 
+setsid gnome-calculator
+// or 
+gnome-calculator & disown
+// or 
+(gnome-calculator &)
+
+
+
