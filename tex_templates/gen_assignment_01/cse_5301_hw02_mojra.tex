@@ -1,0 +1,224 @@
+\documentclass{homeworg}
+
+\usepackage{authblk}
+\title{CSE 5301 - HW02}
+\author[1]{Bardia Mojra}
+\affil[1]{1000766739}
+\begin{document}
+
+\maketitle
+
+
+\exercise
+We have a random variable Z which belongs to the binomial distribution. Suppose
+the probability of the success is 0.2 and number of experiments is 12,  what is
+the probability for each one of the below statements: (5 points each)
+\newline
+Binomial distribution:
+$$
+P_z = P(Z=z) = \binom{n}{z} p^z (1-p)^{n-z}~; ~~z \in \mathbb{Z} ~ (or~z \in \{\mathbb{N}, 0\})
+$$
+$$
+P_z = \frac{n!}{z!(n-z)!} ~ .~ p^z ~.~(1-p)^{n-z}
+$$
+Where:
+$$
+p = 0.2, ~ n = 12
+$$
+
+\newline
+a) P(Z=5)
+\newline
+$$
+P(Z=5) = \frac{n!}{z!(n-z)!} ~ .~ p^z ~.~(1-p)^{n-z}
+\Rightarrow ~ \frac{12!}{5!(12-5)!} ~ .~ (.2)^5 ~.~(.8)^{7} ~ = ~ 0.0532
+$$
+\newline
+b) P(Z<3)
+\newline
+$$
+P(Z<3) = P(0)+P(1)+P(2) =
+\frac{12!~(.2)^0 ~(.8)^{12}}{0!(12)!}~+
+~\frac{12!~(.2)^1 ~(.8)^{11}}{1!(11)!}~+
+~\frac{12!~(.2)^2 ~(.8)^{10}}{2!(10)!} ;~0!\equiv 1
+$$
+\newline
+$$
+\Rightarrow .0687 + 0.2061 + .2835 = .5583
+$$
+\newline
+c) P (Z>=7)
+$$
+P(Z \geqslant 7) = P(7)+P(8)+P(9)+P(10)+P(12)=
+$$
+\newline
+$$
+\frac{12!~(.2)^7 (.8)^{5}}{7!(5)!}+
+\frac{12!~(.2)^8 (.8)^{4}}{8!(4)!}+
+\frac{12!~(.2)^9 (.8)^{3}}{9!(3)!}+
+\frac{12!~(.2)^{10} (.8)^{2}}{10!(2)!}+
+\frac{12!~(.2)^{11} (.8)^{1}}{11!(1)!}+
+\frac{12!~(.2)^{12} (.8)^{0}}{12!(0)!}
+$$
+\newline
+$$
+.0033+.0005+.000057672+.000004325+.000000197+.000000004
+~ = ~ .003862198
+$$
+
+\exercise
+Suppose that we investigated a fast food chain and saw that on average 6 out of
+10 customers order drinks along with their meals. We choose 20 customers
+randomly, find the probability that : (5 points each)
+\newline
+$$
+P_z = \frac{n!~.~p^z~.~(1-p)^{n-z}}{z!(n-z)!};~n=20,~p=.6
+$$
+\newline
+a) Exactly 10 customer order drinks with their meals.
+\newline
+$$
+P_{10} = \frac{20!~.~(.6)^{10}~.~(.4)^{10}}{10!(10)!}
+= ~ .117141551
+$$
+\newline
+b) More than 15 customer order drinks with their meals.
+$$
+P_{>15} =
+\frac{20!~.~(.6)^{16}~.~(.4)^{4}}{16!(4)!}+
+\frac{20!~.~(.6)^{17}~.~(.4)^{3}}{17!(3)!}+
+\frac{20!~.~(.6)^{18}~.~(.4)^{2}}{18!(2)!}+
+\frac{20!~.~(.6)^{19}~.~(.4)^{1}}{19!(1)!}+
+\frac{20!~.~(.6)^{20}~.~(.4)^{0}}{20!(0)!}
+$$
+\newline
+$$
+\Rightarrow~.0349+.01234+.00309+.00049+.000036~=~.050856
+$$
+\newline
+c) What is the variance of the number of drinks?
+\newline
+$$
+Var_{binomial}~=~n.p.(1-p) \Rightarrow 20\cdot.6\cdot.4~=~4.8
+$$
+\newline
+d) Name the distribution
+\newline
+Binomial distribution.
+
+\exercise
+We have a deck of cards (52 cards) and we draw 6 cards randomly without
+replacement. calculate the probability that: (5 points each)
+\newline
+
+a) We have 4 red cards.
+\newline
+$$
+\frac{26}{52}\cdot\frac{25}{51}\cdot\frac{24}{50}\cdot\frac{23}{49}~=
+~ .0552 = 5.52\%
+$$
+\newline
+b) We have 3 face cards.
+\newline
+$$
+\frac{12}{52}\cdot\frac{11}{51}\cdot\frac{10}{50}~=~.00995~=~.995\%
+$$
+\newline
+c) Name the distribution.
+\newline
+Normal distribution.
+\newline
+
+
+\exercise
+Suppose that we saw the power outage on average rate of 4 per month. What is
+the probability that in the next 2 months we see : (5 points each)
+$$
+P(K=k) = e^{-\lambda}\cdot\frac{\lambda^k}{k!}~;~~ \lambda~=~4~per~month~=~8~per~2~months
+$$
+a) Exactly 8 power outage?
+\newline
+$$
+P(k=8)=e^{-8}\cdot\frac{8^8}{8!}= .13958
+$$
+\newline
+b) At most 4 power outage?
+\newline
+$$
+P(k\leqslant 4)=P(0)+P(1)+P(2)+P(3)+P(4)
+$$
+\newline
+$$
+\Rightarrow
+e^{-8}\cdot\frac{8^0}{0!}+
+e^{-8}\cdot\frac{8^1}{1!}+
+e^{-8}\cdot\frac{8^2}{2!}+
+e^{-8}\cdot\frac{8^3}{3!}+
+e^{-8}\cdot\frac{8^4}{4!}
+=.00034+.00268+.01073+.02863+.05725 = .09963
+$$
+\newline
+c) What is the expected value of the number of power outage?
+\newline
+$$
+MLE_{Poisson} = \mu~[mean] = \lambda = 4~~per~~month~or~8~for~the~next~2~months
+$$
+\newline
+d) Name the distribution
+\newline
+Poisson distribution.
+\newline
+
+\exercise
+We are examining a product which was made by a company and we noticed that the
+product is defective with the probability of \(20\%\).  Calculate the below
+statements: (5 points each)
+\newline
+Geometric distribution:
+$$
+PDF_{Geometric}=P(Z=z)=q^{z-1} \cdot p;~~z\in \mathbb{N}
+$$
+$$
+CDF_{Geometric}=P(Z\leqslant z)=1-q^{z} ;~~z\in \mathbb{N}
+$$
+\newline
+a) The probability that the first defective product is the 4th one than we
+examine.
+\newline
+$$
+P(z=4)=(.8)^{3} \cdot .2 = .1024
+$$
+\newline
+b) Calculate the probability that we find the first defective product in the
+first 5 inspections?
+\newline
+$$
+P(.)=P(1)+P(2)+P(3)+P(4)+P(5)= 1-(.8)^5=.67232
+$$
+\newline
+c) Name the distribution.
+\newline
+Geometric distribution.
+
+\exercise
+We have a fair die which has 4 faces (1, 2, 3, 4) and our random variable X
+shows the number when the die is rolled. (5 points each)
+\newline
+a) What is the probability mass function for the random variable x?
+\newline
+$$
+P(X=x)=\frac{1}{4}
+$$
+b) What is the expected value of X?
+\newline
+$$
+\mu = \frac{1+2+3+4}{4}=2.5
+$$
+\newline
+c) Name the distribution
+\newline
+Uniform distribution. 
+
+\bibliography{ref}
+
+\end{document}
