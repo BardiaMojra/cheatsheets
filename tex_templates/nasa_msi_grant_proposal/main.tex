@@ -1,0 +1,106 @@
+% NSF proposal generation template style file.
+% based on latex stylefiles written by Stefan Llewellyn Smith and
+% Sarah Gille, with contributions from other collaborators.
+%
+\documentclass{proposalnsf}
+
+% See this file for a set of pre-defined journal abbreviations
+\input{journal-abbreviations.tex} 
+
+\newcommand{\degrees}{$\!\!$\char23$\!$}
+\renewcommand{\refname}{\centerline{References cited}}
+
+% This handles hanging indents for publications
+\def\rrr#1\\{\par
+\medskip\hbox{\vbox{\parindent=2em\hsize=6.12in
+\hangindent=4em\hangafter=1#1}}}
+
+\def\baselinestretch{1}
+
+\begin{document}
+
+\begin{center}
+{\Large{\bf Project Summary}}\\*[3mm]
+{\bf Proposal Title} \\*[3mm]
+
+PI Names \\
+More PI Names
+
+\end{center}
+
+
+This is a  proposal to do .....
+
+
+
+\noindent
+{\bf Intellectual Merit}
+
+\ \\
+
+\noindent
+{\bf Broader Impacts}
+
+\renewcommand{\thepage} {B--\arabic{page}}
+
+\newpage
+
+% reset page numbering to 1.  This is helpful, since the text can only
+% be 15 pages, and reviewers will want to believe we've kept within
+% those limits
+
+\pagenumbering{arabic}
+\renewcommand{\thepage} {D--\arabic{page}}
+
+\newpage
+
+\centerline{\bf Results from Prior NSF Support}
+
+\noindent
+{\bf Previous Award Title}
+{\it award number} (PI); dates, \$amount
+
+Research carried out ....
+
+\ \\
+
+\noindent{\Large \bf PROJECT DESCRIPTION}
+
+\section{Introduction}
+
+Text ....
+
+\section{A Section}
+
+More text.
+
+\section{Another Section}
+
+More text.  Cite an example \cite[]{sample_ref}
+
+\section{Yet Another Section}
+
+\section{Time Line and Management Plan}
+
+\section{Summary:  Significance of proposed work}
+
+\subsection{Intellectual Merit}
+
+\subsection{Broader Impacts}
+
+
+
+\newpage
+\pagenumbering{arabic}
+\renewcommand{\thepage} {E--\arabic{page}}
+
+\bibliography{draft}
+\bibliographystyle{jponew}
+
+\newpage
+\pagenumbering{arabic}
+\renewcommand{\thepage} {G--\arabic{page}}
+\noindent{\Large \bf BUDGET JUSTIFICATION}
+
+\end{document}
+
