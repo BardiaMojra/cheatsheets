@@ -12,6 +12,10 @@ def main():
     newfile = newfile.replace('&', 'n')
     newfile = newfile.replace(',', '')
     newfile = newfile.replace('and', 'n')
+    newfile = newfile.replace("'", '')
+    newfile = newfile.replace('-', '_')
+    newfile = newfile.replace('__', '_')
+    newfile = newfile.replace('__', '_')
     src = srcDir+file
     dest = srcDir+newfile
     os.rename(src,dest)
