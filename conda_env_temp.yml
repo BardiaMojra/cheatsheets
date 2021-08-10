@@ -2,11 +2,25 @@ name: env-name
 
 channels:
   - conda-forge
+  - anaconda
   - defaults
-
+  
 dependencies:
-  - python=3.7
-  - codecov
+  - python
+  - numpy
+  - scipy
+  - basemap
+  - numpy-quaternion
+  - matplotlib
+  - pandas
+  - cudatoolkit
+  - numba
+  - pip:
+      - h5py
+      - pyquaternion
+      - pyqt5
+      - xlrd
+      - openpyxl
 
 variables:
   VAR1: valueA
