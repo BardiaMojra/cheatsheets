@@ -1,0 +1,87 @@
+\documentclass[float=false, crop=true]{standalone}
+
+\usepackage{import}
+\usepackage{tikz}
+\usepackage{tikz-3dplot}
+\usepackage{pgfplots}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{bm}
+%\usepackage{apacite}
+\usepackage{color}
+\usepackage{comment}
+\usepackage{float}
+\usepackage{graphicx}
+\RequirePackage{fix-cm}
+\usepackage{braket}
+\usepackage{pgfplots}
+\usepackage{pgfplotstable}
+
+\input{./color_defs}
+
+\usetikzlibrary{fadings,shapes.geometric,calc,intersections,through,decorations.shapes}
+\usetikzlibrary{arrows.meta,patterns,snakes,backgrounds,fit,angles,quotes,graphs,trees}
+\usetikzlibrary{decorations.pathmorphing,backgrounds,positioning,fit,petri,positioning}
+\usetikzlibrary{spy,mindmap,shadows,automata,shapes.misc,babel,scopes,svg.path,animations,bending}
+
+
+% ---------------------------------------------------------------------
+\newcommand{\fnt}[1]{\fontsize{#1}{0}\selectfont}
+\newcommand{\logosize}{5cm}
+\newcommand{\triangleside}{\logosize}
+\newcommand{\incircrad}{(\triangleside)*sqrt(3)/6}
+\newcommand{\innercircrad}{(\triangleside)*sqrt(3)/(6*3.14159)}
+\newcommand{\trianglecolor}{GREEN_BLUE} % YALE_BLUE or GREEN_BLUE 
+\newcommand{\incirccolor}{PRINCETON_ORANGE}
+
+
+
+\begin{document}
+
+    \begin{tikzpicture}
+        \coordinate (A) at (0:0cm);
+        \coordinate (B) at (0:\logosize);
+        \coordinate (C) at (60:\logosize);
+        \coordinate (I) at (\triangleside/2, {\incircrad});
+        \coordinate (U) at ({\logosize*2 + \incircrad*2}, {\incircrad*2 + \innercircrad*2.25});
+        \coordinate (R) at ({\logosize*2 + \incircrad*2}, {\incircrad + \innercircrad*2.5});
+        \coordinate (V) at ({\logosize*2 + \incircrad*2}, {\innercircrad*2 });
+
+        % drawing the triangle
+        \filldraw[fill=\trianglecolor,draw=none] (A) -- (B) -- (C) -- cycle;
+
+        % draw the incircle
+        \node[circle,minimum size=\incircrad*2.0,fill=\incirccolor, draw=none,] at (I) {};
+
+        % draw inner circle at incenter
+        \node[circle, minimum size=\innercircrad*1.25,inner sep=0,outer sep=0,draw=none,fill=\trianglecolor] at (I) {};
+    
+
+        % -------------------------------------------------------------------------------------------
+        % comment this part for short
+        % UNIVERSITY OF TEXAS
+        \node[inner sep=0,outer sep=0,rectangle,font=\fnt{27},draw=none,anchor=east,] (ut) at (U) [BATTLESHIP_GRAY] {\textsf{UNIVERSITY OF TEXAS}};
+        
+        % ROBOTIC
+        \node[inner sep=0, outer sep=0,rectangle,font=\fnt{60},draw=none,anchor=east] (rob) at (R) [\trianglecolor] {\textsf{ROBOTIC}};
+        
+        % VISION
+        \node[inner sep=0, outer sep=0,rectangle,font=\fnt{70},draw=none,anchor=east] (vis) at (V) [PRINCETON_ORANGE] {\textsf{VISION}};
+        
+        % -------------------------------------------------------------------------------------------
+
+
+        % outer rectangle
+        % \node[inner sep=2pt,outer sep=0,rectangle,fill=none,opacity=0.5,fit={(A) (C) (B)}] {};  % for short 
+        \node[inner sep=2pt,outer sep=0,rectangle,fill=none,opacity=0.5,fit={(A) (C) (B) (ut) (rob) (vis)}] {}; % for long
+    \end{tikzpicture}
+
+\end{document}
+
+
+
+

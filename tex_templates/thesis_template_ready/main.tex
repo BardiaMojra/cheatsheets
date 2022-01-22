@@ -1,0 +1,59 @@
+\documentclass[12pt]{book}
+
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+
+
+\graphicspath{ {images/} }
+
+\title{
+{DLO Manipulation in Real-Time}\\
+{\large The University of Texas at Arlington}\\
+% {\includegraphics{university.jpg}}
+}
+\author{Bardia Mojra}
+\date{Day Month Year}
+\maketitle
+
+\begin{document}
+% \newpage
+\chapter*{Abstract}
+Abstract goes here
+
+\chapter*{Dedication}
+To mum and dad
+
+\chapter*{Declaration}
+I declare that.
+
+\chapter*{Acknowledgements}
+I want to thank.
+
+\tableofcontents
+
+\chapter{Proposal}
+\input{chapters/ch00_proposal.tex}
+
+\chapter{Introduction}
+\input{chapters/ch01_intro.tex}
+
+\chapter{Related Work}
+\input{chapters/ch02_related_work.tex}
+
+\chapter{Design Requirements}
+\input{chapters/ch03_design_reqs.tex}
+
+\chapter{System Architecture}
+\input{chapters/ch04_sys_arch.tex}
+
+\chapter{Experiments}
+\input{chapters/ch05_experiments.tex}
+
+\chapter{Conclusion}
+\input{chapters/conclusion.tex}
+
+\appendix
+\chapter{Appendix Title}
+\input{chapters/appendix.tex}
+
+\end{document}

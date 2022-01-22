@@ -1,0 +1,21 @@
+\usepackage{mathptmx}		% mathcal won't be same after this
+
+% \mdutchcal{}
+\DeclareFontFamily{U}{dutchcal}{\skewchar \font =45}
+\DeclareFontShape{U}{dutchcal}{m}{n}{
+	<-> dutchcal-r}{}
+\DeclareFontShape{U}{dutchcal}{b}{n}{
+	<-> dutchcal-b}{}
+\DeclareMathAlphabet{\mdutchcal}{U}{dutchcal}{m}{n}
+\SetMathAlphabet{\mdutchcal}{bold}{U}{dutchcal}{b}{n}
+\DeclareMathAlphabet{\mdutchbcal} {U}{dutchcal}{b}{n}
+
+% \mtxcal{}
+\DeclareFontFamily{U}{txcal}{\skewchar \font =45}
+\DeclareFontShape{U}{txcal}{m}{n}{
+	<-> txr-cal}{}
+\DeclareFontShape{U}{txcal}{b}{n}{
+	<-> txb-cal}{}
+\DeclareMathAlphabet{\mtxcal}{U}{txcal}{m}{n}
+\SetMathAlphabet{\mtxcal}{bold}{U}{txcal}{b}{n}
+\DeclareMathAlphabet{\mtxbcal} {U}{txcal}{b}{n}

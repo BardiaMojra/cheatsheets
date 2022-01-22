@@ -1,0 +1,504 @@
+% =================================================================================================
+% set document class
+% =================================================================================================
+\documentclass[slidecentered,compress,dvipsnames,table,xcdraw,aspectratio=169]{beamer}
+
+% =================================================================================================
+% packages
+% =================================================================================================
+\usepackage{animate}
+\usepackage{multicol}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{mathtools}
+\usepackage{bm}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+% \usepackage[T1]{fontenc}		% not removing this so that you rememeber; adding this makes fonts jaggedy
+\usepackage{tcolorbox}
+% \RequirePackage{fix-cm}		% also, this one makes the fonts thinner (not strokes; the actual size)
+\usepackage{transparent}
+\usepackage{textpos}
+\usepackage{tikz}
+\usepackage{xstring}
+\usepackage{color}				% need for soul \hl
+\usefonttheme{professionalfonts}
+\usefonttheme[onlymath]{serif}
+\usepackage{contour}
+\usepackage{ulem}
+\usepackage{soul}
+\usepackage{svg}
+\usepackage{calligra}
+\usepackage[style=ieee]{biblatex}
+\usepackage[pro]{fontawesome5}
+
+\usepackage{framed}
+\usepackage{ifthen}
+\usepackage{relsize}
+\usepackage{textcomp, xspace}
+
+
+\usetikzlibrary{calc}
+\usetikzlibrary{decorations.pathmorphing,calc,shadows.blur,shadings}
+% =================================================================================================
+% settings for customization
+% =================================================================================================
+
+% set the inkscape .exe path here. needed to include svg directly
+\setsvg{inkscape = "C:/Program Files/Inkscape/inkscape.exe" -z -D}
+
+% tikz libraries
+\usetikzlibrary{shadows}
+
+% Numbered captions of tables, pictures, etc.
+\setbeamertemplate{caption}[numbered]
+
+% Bibliography settings
+\addbibresource{references.bib}
+\setbeamertemplate{bibliography item}{\insertbiblabel}
+
+% -------------------------------------------------------------------------------------------------
+% to add icons instead of numbers to references in bib
+% -------------------------------------------------------------------------------------------------
+% \setbeamertemplate{bibliography item}{%
+% 	\ifboolexpr{test {\ifentrytype{book}} or test {\ifentrytype{mvbook}} or test {\ifentrytype{collection}} or test {\ifentrytype{mvcollection}} or test {\ifentrytype{reference}} or test {\ifentrytype{mvreference}}}%
+% 	{\setbeamertemplate{bibliography item}[book]}
+% 	{%
+% 		\ifboolexpr{test {\ifentrytype{online}} or test {\ifentrytype{electronic}}}%
+% 		{\setbeamertemplate{bibliography item}[online]}%
+% 		{\setbeamertemplate{bibliography item}[article]}}%
+% \usebeamertemplate{bibliography item}%
+% }
+% \setbeamerfont{bibliography item}{shape=\scshape, size=\tiny}
+% \setbeamerfont{bibliography entry author}{shape=\scshape, size=\tiny}
+% \setbeamerfont{bibliography entry title}{shape=\scshape, size=\tiny}
+% \setbeamerfont{bibliography entry location}{shape=\scshape, size=\tiny}
+% \setbeamerfont{bibliography entry note}{shape=\scshape, size=\tiny}
+
+% set graphics path
+\graphicspath{{../figures/}}
+
+% get rid of tiny navigation buttons; never use it anyway
+\beamertemplatenavigationsymbolsempty
+
+% set the footnote size to tiny
+\setbeamerfont{footnote}{size=\tiny}
+% add extra space to accomodate progress bar
+\setbeamertemplate{footline}{\vspace{7pt}}
+% adjust footnote separation to save space
+\setlength{\footnotesep}{0.18cm}
+
+% set footnote color
+\setbeamercolor{footnote}{fg=STEEL_BLUE_2}
+
+% -------------------------------------------------------------------------------------------------
+% edit footnote footcite pattern 📝
+% -------------------------------------------------------------------------------------------------
+% usage: \footcite{key}
+% also for foot notes \footnote{<add foot note here>}
+\input{./footciting}
+
+% set bibliography font size
+\renewcommand*{\bibfont}{\scriptsize}
+
+% declare label name to compile named frames only
+% \includeonlyframes{current}
+
+% =================================================================================================
+% input (import) modules
+% =================================================================================================
+\input{./math_defs}
+\input{./color_defs}
+
+% 🚨 INPUT PROGRESS BAR ONLY IN THE END AFTER YOU ARE DONE BUILDING THE PRESENTATION 🚨
+% It takes a while to add progress bar features on slides. Also, it will error out if previous 
+% compilation had errors. So, comment below while working on your slides.
+\input{./progress_bar}
+
+% set global color for normal text (almost black)
+\setbeamercolor{normal text}{fg=BLACK_CHOCOLATE}
+
+% =================================================================================================
+% set mode and theme
+% =================================================================================================
+\mode<presentation>{\usetheme{Antibes}\usecolortheme[named=YALE_BLUE]{structure}}
+
+
+% =================================================================================================
+% new command definitions 
+% =================================================================================================
+% -------------------------------------------------------------------------------------------------
+% choose any font size !!
+% -------------------------------------------------------------------------------------------------
+% usage: \fnt{<fontsize>}{<text>}
+% \newcommand{\fnt}[1]{\fontsize{#1}{0}\selectfont}
+
+% -------------------------------------------------------------------------------------------------
+% tikzmark can be used to draw things like arbitrary arrows between two marked points
+% -------------------------------------------------------------------------------------------------
+% usage: to put a tikz node with name (say 'mark1'), drop a '\tikzmark{mark1}' 
+% for example: 
+% 	Important is an \tikzmark{m1} important \tikzmark{m2} word
+% The above will place a nodes named m1 and m2 before and after the word 'important'
+% These can be used as anchor coord to (for example) draw a line from m1 and m2 to underline or highlight or 
+% just fancify the word 'important', as follows
+% \begin{tikzpicture}[overlay, remember picture]
+% 	\draw[opacity=0.7, ultra thick, color=green] (m1.south) -- (m2.south);
+% \end{tikzpicture}
+\newcommand\tikzmark[1]{\tikz[overlay, remember picture] \node (#1) {};}
+
+% -------------------------------------------------------------------------------------------------
+% helper command to display circle with given color and name 🔴🟠🟡🟢🔵🟣🎨
+% -------------------------------------------------------------------------------------------------
+% usage: \colorshow{BRIGHT_MAROON}
+\newcommand{\colorshow}[1]{
+	\begin{tikzpicture}
+		\node[fill=#1,
+		circle,
+		minimum size=2ex,
+		label={\tiny \StrSubstitute{#1}{_}{\ }},
+		] at (0,0){};
+	\end{tikzpicture}
+	}
+	
+% -------------------------------------------------------------------------------------------------
+% helper command to set inactive text
+% -------------------------------------------------------------------------------------------------
+\newcommand{\unemph}[1]{\texttransparent{0.2}{#1}}
+
+% -------------------------------------------------------------------------------------------------
+% renew underline \myul
+% -------------------------------------------------------------------------------------------------
+% \myul will underline closer not cutting through p's and y's hanging tails
+% for the usual underline use \ul
+% usage: 
+% 	\myul{python}  
+% the underline will be closer to baseline and not cut through the hanging tails
+% 	\ul{python}
+% further from baseline avoiding cutting the hanging tails
+\renewcommand{\ULdepth}{1.8pt}
+\contourlength{0.8pt}
+\newcommand{\myul}[1]{%
+  \uline{\phantom{#1}}%
+  \llap{\contour{white}{#1}}%
+}
+
+% -------------------------------------------------------------------------------------------------
+% set the highlight color
+% -------------------------------------------------------------------------------------------------
+% usage: \hl{dummy text}
+\makeatletter
+\let\HL\hl
+\renewcommand{\hl}{%
+  \let\set@color\beamerorig@set@color
+  \let\reset@color\beamerorig@reset@color
+\HL}
+\makeatother
+\sethlcolor{MINDARO}
+
+% -------------------------------------------------------------------------------------------------
+% font styles other than \mathcal -> \mdutchcal and \mtxcal
+% -------------------------------------------------------------------------------------------------
+% \input{./other_fonts}
+
+% -------------------------------------------------------------------------------------------------
+% torn paper
+% -------------------------------------------------------------------------------------------------
+% usage: \tornpaper{<image or text here>}
+\input{./torn_paper}
+
+% -------------------------------------------------------------------------------------------------
+% set helper commands to include svgs for fun inline illustrations
+% -------------------------------------------------------------------------------------------------
+\newcommand{\apple}[1]{\raisebox{-.12\height}{\includegraphics[height=#1]{apple.pdf}}}
+\newcommand{\cherry}[1]{\raisebox{-.12\height}{\includegraphics[height=#1]{cherry.pdf}}}
+\newcommand{\grapes}[1]{\raisebox{-.12\height}{\includegraphics[height=#1]{grapes.pdf}}}
+\newcommand{\lemon}[1]{\raisebox{-.12\height}{\includegraphics[height=#1]{lemon.pdf}}}
+\newcommand{\orange}[1]{\raisebox{-.12\height}{\includegraphics[height=#1]{orange.pdf}}}
+
+\newcommand{\mydata}[1]{\raisebox{-.12\height}{\includesvg[height=#1]{red_hard_disk.svg}}}
+\newcommand{\mygrid}[1]{\raisebox{-.12\height}{\includesvg[height=#1]{3d_net_grid.svg}}}
+\newcommand{\fmodel}[1]{\raisebox{-.12\height}{\includesvg[height=#1]{fashion_model.svg}}}
+\newcommand{\wbody}[1]{\raisebox{-.12\height}{\includesvg[height=#1]{wireframe_body.svg}}}
+\newcommand{\pbody}[1]{\raisebox{-.12\height}{\includesvg[height=#1]{poly_body.svg}}}
+\newcommand{\mymodel}[1]{\raisebox{-.12\height}{\includesvg[height=#1,angle=90]{doublehelix.svg}}}
+\newcommand{\brain}[1]{\raisebox{-.12\height}{\includesvg[height=#1]{brain.svg}}}
+\newcommand{\polybrain}[1]{\raisebox{-.12\height}{\includesvg[height=#1]{poly_brain.svg}}}
+\newcommand{\microchip}[1]{\raisebox{-.12\height}{\includesvg[height=#1]{microchip.svg}}}
+
+% -------------------------------------------------------------------------------------------------
+% shortcuts 
+% -------------------------------------------------------------------------------------------------
+\newcommand{\la}{\textlangle\xspace}  
+\newcommand{\ra}{\textrangle\xspace}
+\DeclareMathOperator*{\argminA}{arg\,min}
+\DeclareMathOperator*{\argmaxA}{arg\,max}
+
+
+% =================================================================================================
+% define title
+% =================================================================================================
+\title[{Presentation: \la name of presentation here \ra}]{
+	{\la main title here \ra}
+}
+
+\subtitle{\small \la authors or subtitle here \ra}
+\author{\textcolor{RAISIN_BLACK}{\la presenter name here \ra}}
+\institute{
+	\includegraphics[height=1cm]{uta_logo.pdf}\newline \newline
+	\textcolor{BRIGHT_MAROON}{\bf \small \la series/episode/institutional info here \ra} \newline
+	\textcolor{NICKEL}{\tiny \la date here \ra}\newline \newline
+}
+% RVL logo
+\titlegraphic{\vspace{-15mm} \hfill \includegraphics[height=1cm]{rvl_logo_2.pdf}}
+\date{}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% =================================================================================================
+% DOCUMENT BEGINS HERE
+% =================================================================================================
+\begin{document}
+
+% -------------------------------------------------------------------------------------------------
+% title 
+% -------------------------------------------------------------------------------------------------
+%% title frame
+\begin{frame}
+	\titlepage
+\end{frame}
+
+% UTA logo on all frames after
+\addtobeamertemplate{frametitle}{}{
+	\begin{textblock*}{100mm}(0.95\textwidth,-0.96cm)
+	\includegraphics[height=0.95cm,]{uta_logo_white.pdf}
+	\end{textblock*}
+}
+
+% -------------------------------------------------------------------------------------------------
+% table of contents 
+% -------------------------------------------------------------------------------------------------
+
+% %% Single column ToC
+% \begin{frame}{Outline}
+% 	\tableofcontents
+% \end{frame}
+
+% %% ToC at beginning of sections
+% \AtBeginSection[]
+% {
+% \begin{frame}{Outline}
+% 	\tableofcontents[currentsection]
+% \end{frame}
+% }
+
+% %% ToC at beginning of subsections
+% \AtBeginSubsection[]
+% {
+% \begin{frame}{Outline}
+% 	\tableofcontents[currentsubsection]
+% \end{frame}
+% }
+
+%% Multiple column ToC
+\begin{frame}{Outline}
+	\begin{multicols}{2}
+    	\tableofcontents[sections={1-8}]
+    \end{multicols}
+\end{frame}
+
+
+%% ToC at begin of sections
+\AtBeginSection[]
+{
+\begin{frame}{Outline}
+	\begin{multicols}{2}
+    	\tableofcontents[sections={1-8}, currentsection]
+    \end{multicols}
+\end{frame}
+}
+%% ToC at being subsections
+\AtBeginSubsection[]
+{
+\begin{frame}{Outline}
+	\begin{multicols}{2}
+    	\tableofcontents[sections={1-8}, currentsubsection]
+    \end{multicols}
+\end{frame}
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% =================================================================================================
+% MAIN CONTENT STARTS HERE
+% =================================================================================================
+
+% -------------------------------------------------------------------------------------------------
+% introduction 
+% -------------------------------------------------------------------------------------------------
+\section{Introduction}
+\label{sec:introduction}
+\begin{frame}{Introduction}
+	\centering
+	Example frame
+\end{frame}
+
+\begin{frame}{\ }
+	\centering
+	Example empty frametitle frame
+\end{frame}
+
+\begin{frame}{(recall \footcite{walmsley2020galaxy}, \footcite{gal2017deep}, \footcite{gal2016dropout})}
+	\centering
+	Example footcites
+	\Huge
+	\begin{animateinline}[autoplay, loop]{30}
+		\multiframe{30}{Ry=0.0+0.0333}{{\transparent{\Ry} \faIcon{angle-double-left}}}
+	\end{animateinline}
+\end{frame}
+
+\begin{frame}{(recap)}
+	\centering
+	Example animation
+	\Huge
+	\begin{animateinline}[autoplay, loop]{30}
+		\multiframe{30}{Ry=0.0+0.0333}{{\transparent{\Ry} \faIcon{angle-double-left}}}
+	\end{animateinline}
+\end{frame}
+
+\begin{frame}{Lorem Ipsum}
+	\centering
+	Example torn paper \\
+	\tornpaper{
+		\includegraphics[width=0.7\textwidth]{bald1.png}
+	}
+\end{frame}
+
+
+% -------------------------------------------------------------------------------------------------
+% problem
+% -------------------------------------------------------------------------------------------------
+\section{Problem}
+\label{sec:problem}
+
+\begin{frame}{Using \textit{exampleblock} and \textit{block}}
+	\only<1>{
+		\begin{exampleblock}{\textit{exampleblock} example (title)}
+			\la \textit{exampleblock} content here \ra
+		\end{exampleblock}
+	}
+	\only<2->{
+		\begin{block}{\textit{block} example (title)}
+			\la \textit{block} content here \ra
+		\end{block}
+	}
+\end{frame}
+
+\begin{frame}{Using \textit{columns} 50-50}
+	\begin{columns}
+		\column{0.5\textwidth}
+		\centering
+		\la \textit{column-1} content \ra \\
+		Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.
+		
+		\column{0.5\textwidth}
+		\centering
+		\la \textit{column-2} content \ra \\
+		Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.
+
+	\end{columns}
+\end{frame}
+
+\begin{frame}{Using \textit{columns} 60-40}
+	\begin{columns}
+		\column{0.6\textwidth}
+		\centering
+		\la \textit{column-1} content \ra \\
+		Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.
+		
+		\column{0.4\textwidth}
+		\centering
+		\la \textit{column-2} content \ra \\
+		Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.
+
+	\end{columns}
+\end{frame}
+
+\begin{frame}{Using \textit{columns} 30-70}
+	\begin{columns}
+		\column{0.3\textwidth}
+		\centering
+		\la \textit{column-1} content \ra \\
+		Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.
+		
+		\column{0.7\textwidth}
+		\centering
+		\la \textit{column-2} content \ra \\
+		Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.
+
+	\end{columns}
+\end{frame}
+
+% -------------------------------------------------------------------------------------------------
+% solution
+% -------------------------------------------------------------------------------------------------
+\section{Solution}
+\label{sec:solution}
+
+\begin{frame}{Advanced Tricks}
+	Example RVL seminar presentation for some advanced tricks, click $\rightarrow$ \href{https://bit.ly/3k8fPEF}{batchBALD} or \href{https://bit.ly/3wkri9g}{EBV2}
+\end{frame}
+
+% -------------------------------------------------------------------------------------------------
+% experiment results
+% -------------------------------------------------------------------------------------------------
+\section{Experiment Results}
+\label{sec:exp_results}
+
+\begin{frame}{Adding SVGs}
+	\centering
+	\includesvg[height=0.5\textheight]{poly_brain.svg}
+\end{frame}
+
+% -------------------------------------------------------------------------------------------------
+% summary
+% -------------------------------------------------------------------------------------------------
+\section{Summary}
+\label{sec:summary}
+
+\begin{frame}{Summary}
+	\begin{enumerate}
+		\item [\faIcon{magic}] Create to understand
+		\item [\faIcon{rocket}] Good luck!
+
+	\end{enumerate}
+\end{frame}
+
+% % dummy slide to display colors
+% \begin{frame}{Color Palette}
+% 	% list whatever colors you wish to check
+% 	\foreach \co in {red, CYCLAMEN, RUBY_RED, BLOOD_RED, MAROON_X_11, GOOGLE_R, RED_CRAYOLA, GLOSSY_GRAPE, CLARET, FLAME, BRICK_RED, FIRE_BRICK, RED_MUNSELL, CINNABAR, PERSIAN_BLUE_COMP_MUD_BROWN, MALACHITE, PERSIAN_BLUE_TRIADIC_1, PERSIAN_BLUE_TRIADIC_2, CERISE}{
+% 		\colorshow{\co}
+% 	}
+% \end{frame}
+
+
+% % -------------------------------------------------------------------------------------------------
+% % extro
+% % -------------------------------------------------------------------------------------------------
+\begin{frame}{Questions}
+	\centering
+	% {\Huge \calligra Thank you}
+	Thank you
+\end{frame}
+
+\begin{frame}[allowframebreaks]{References}
+	\printbibliography
+\end{frame}
+
+\end{document}
+

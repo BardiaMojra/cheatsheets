@@ -1,0 +1,29 @@
+\DeclareOptionBeamer{compress}{\beamer@compresstrue}
+\ProcessOptionsBeamer
+
+\mode<presentation>
+
+\useoutertheme[footline=institutetitle]{miniframes}
+\useinnertheme{circles}
+\usecolortheme{whale}
+\usecolortheme{orchid}
+
+\definecolor{uta_blue_1}{RGB}{0,100,177}
+\definecolor{uta_blue_2}{RGB}{0,68,124}
+\definecolor{uta_blue_3}{RGB}{231,246,253}
+\definecolor{uta_orange_1}{RGB}{245,128,38}
+
+\setbeamercolor{palette primary}{bg=uta_blue_2,fg=white}
+\setbeamercolor{palette secondary}{bg=uta_blue_2,fg=white}
+\setbeamercolor{palette tertiary}{bg=uta_blue_2,fg=white}
+\setbeamercolor{palette quaternary}{bg=uta_blue_2,fg=white}
+\setbeamercolor{structure}{fg=uta_blue_2}  % itemize, enumerate, etc.
+\setbeamercolor{section in toc}{fg=uta_blue_2}  % TOC sections
+\setbeamercolor{block title}{use=structure,bg=uta_blue_2,fg=white}
+\setbeamercolor{block body}{use=structure,bg=uta_blue_3,fg=black}
+
+% Override palette coloring with secondary
+\setbeamercolor{subsection in head/foot}{bg=uta_orange_1,fg=white}
+
+\mode
+<all>

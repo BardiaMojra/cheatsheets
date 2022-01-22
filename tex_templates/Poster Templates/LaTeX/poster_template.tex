@@ -1,0 +1,193 @@
+\documentclass[final]{beamer}
+\usepackage[scale=1.24]{beamerposter}
+\usepackage{graphicx}  
+\usepackage{subfigure}
+
+\graphicspath{{figures/}{images/}}                                                                                                                                           
+
+%-------------------------------------------------------------------------------
+% Custom commands that we use frequently
+%-------------------------------------------------------------------------------
+\newcommand{\bb}[1]{\mathbb{#1}}
+\newcommand{\cl}[1]{\mathcal{#1}}
+\newcommand{\fA}{\mathfrak{A}}
+\newcommand{\fB}{\mathfrak{B}}
+\newcommand{\Tr}{{\rm Tr}}
+\newtheorem{thm}{Theorem}
+
+%-------------------------------------------------------------------------------
+% Define the column width and poster size. To set effective sepwid, onecolwid, 
+% and twocolwid values, first choose how many columns you want and how much 
+% separation you want between columns. The separation I chose is 0.024 and I 
+% want 4 columns. Then set onecolwid to be (1-(4+1)*0.024)/4 = 0.22. Set 
+% twocolwid to be 2*onecolwid + sepwid = 0.464.
+%-------------------------------------------------------------------------------
+\newlength{\sepwid}
+\newlength{\onecolwid}
+\newlength{\twocolwid}
+\setlength{\paperwidth}{48in}  % A0 width:  46.8 in
+\setlength{\paperheight}{36in} % A0 height: 33.1 in
+\setlength{\sepwid}{0.024\paperwidth}
+\setlength{\onecolwid}{0.22\paperwidth}
+\setlength{\twocolwid}{0.464\paperwidth}
+\setlength{\topmargin}{-0.5in}
+\usetheme{confposter}
+\usepackage{exscale}
+
+%-------------------------------------------------------------------------------
+% When including a figure in your poster, be sure that the commands are typed in 
+% the following order:
+% \begin{figure}
+% \includegraphics[...]{...}
+% \caption{...}
+% \end{figure}
+% That is, put the \caption after the \includegraphics.
+%-------------------------------------------------------------------------------
+\usecaptiontemplate{
+\small
+\structure{\insertcaptionname~\insertcaptionnumber:}
+\insertcaption}
+
+%-------------------------------------------------------------------------------
+% Define colors (see beamerthemeconfposter.sty to change these color definitions)
+%-------------------------------------------------------------------------------
+\setbeamercolor{block title}{fg=uta_orange_1,bg=white}
+\setbeamercolor{block body}{fg=black,bg=white}
+\setbeamercolor{block alerted title}{fg=white,bg=uta_blue_1}
+\setbeamercolor{block alerted body}{fg=black,bg=uta_blue_1!10}
+
+%------------------------------------------------------------------------------
+% Name and authors of poster/paper/research
+%------------------------------------------------------------------------------
+\title{Title}
+\author{Firstname Lastname}
+\institute{Department of Computer Science and Engineering, University of Texas at Arlington}
+
+%-------------------------------------------------------------------------------
+% Start the poster itself
+%-------------------------------------------------------------------------------
+% The \rmfamily command is used frequently throughout the poster to force a 
+% serif font to be used for the body text. Serif font is better for small text, 
+% sans-serif font is better for headers (for readability reasons).
+%-------------------------------------------------------------------------------
+\begin{document}
+\begin{frame}[t]
+\begin{columns}[t]                   % The [t] option aligns the column's content at the top
+\begin{column}{\sepwid}\end{column}  % Empty spacer column
+\begin{column}{\onecolwid}
+\begin{alertblock}{The Goal}
+\rmfamily{
+}
+\end{alertblock}
+
+\vskip2ex
+\begin{block}{Introduction}
+\rmfamily{
+}
+\end{block}
+
+\vskip2ex
+\begin{block}{Mathematical Background}
+\rmfamily{
+}
+\end{block}
+\end{column}
+
+\begin{column}{\sepwid}\end{column}  % Empty spacer column
+\begin{column}{\onecolwid}
+\rmfamily{
+\vspace{-75pt}
+%\begin{figure}
+%\begin{center}
+%\includegraphics[width=11in]{}
+%\caption{
+%}
+%\label{fig:}
+%\end{center}
+%\end{figure}
+}
+
+\vskip2ex
+\begin{block}{Problem Statement}
+\rmfamily{
+%\begin{figure}
+%\begin{center}
+%\includegraphics[width=11in]{}\\
+%\caption{
+%}
+%\label{fig:}
+%\end{center}
+%\end{figure}
+}
+\end{block}
+\end{column}
+
+\begin{column}{\sepwid}\end{column}  % Empty spacer column
+\begin{column}{\onecolwid}
+\begin{block}{}
+\rmfamily{
+}
+\end{block}
+
+%\vskip2ex
+\begin{block}{}
+\rmfamily{
+}
+\end{block}
+
+%\vskip2ex
+\begin{block}{}
+\rmfamily{
+}
+\end{block}
+
+%\vskip2ex
+\begin{block}{Experimental Results}
+\rmfamily{
+}
+%\begin{figure}                                                                                 
+%\begin{center}
+%\includegraphics[width=1.0\columnwidth]{}
+%\vspace{-20pt}
+%\caption{\label{fig:} 
+%}                                                                 
+%\end{center}
+%\end{figure}  
+\end{block}
+\end{column}
+
+\begin{column}{\sepwid}\end{column}  % Empty spacer column
+\begin{column}{\onecolwid}
+\begin{block}{Conclusion}
+\rmfamily{
+}
+\end{block}
+
+%\vskip1ex
+\vspace{-0.5ex}
+\begin{block}{References}
+\small{\rmfamily{\begin{thebibliography}{99}
+%\bibitem{beksi20163d} W.J. Beksi and N. Papanikolopoulos, ``3D Point Cloud 
+%Segmentation using Topological Persistence'', \emph{IEEE International 
+%Conference on Robotics and Automation (ICRA)}, pp. 5046-5051, 2016.
+
+\end{thebibliography}}}
+\end{block}
+
+%\vskip1ex
+\begin{block}{Acknowledgements}
+{\rmfamily{
+}}
+
+\vspace{0.2in}
+\begin{center}
+\begin{tabular}{ccc}
+\includegraphics[scale=0.5]{uta_logo.png} 
+\end{tabular}
+\end{center}
+\end{block}
+\end{column}
+\begin{column}{\sepwid}\end{column}  % Empty spacer column
+\end{columns}
+\end{frame}
+\end{document}

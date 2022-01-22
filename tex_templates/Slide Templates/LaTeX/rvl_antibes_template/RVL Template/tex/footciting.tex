@@ -1,0 +1,28 @@
+% edit footnote footcite pattern
+\makeatletter
+\newbibmacro*{hypercite}{%
+	\renewcommand{\@makefntext}[1]{\noindent\tiny##1}%
+	\footnotetext{%
+		\blxmkbibnote{foot}{%
+			\printtext[labelnumberwidth]{%
+				\printfield{prefixnumber}%
+				\printfield{labelnumber}%
+			}%
+			\addspace%
+			\printnames[][1-1]{author}
+			\setunit{\addcomma\addspace}
+			\printfield{year}
+			\setunit{\addcomma\addspace}
+			\printfield{title}
+		}%
+	}%
+}%
+\DeclareCiteCommand{\hypercite}%
+	{\usebibmacro{cite:init}}
+	{\usebibmacro{hypercite}}
+	{}
+	{\usebibmacro{cite:dump}}
+
+% Redefine the \footcite command to use the reference number
+\renewcommand{\footcite}[1]{\cite{#1}\hypercite{#1}}
+\makeatother

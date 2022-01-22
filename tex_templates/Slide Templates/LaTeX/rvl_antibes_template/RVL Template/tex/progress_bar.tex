@@ -1,0 +1,88 @@
+% remember this should import after color_defs in the main file
+
+\usepackage{tikz}
+\usetikzlibrary{calc}
+\usepackage{xifthen}
+
+\makeatletter
+\newcommand{\Progressbar@BarWidth}{10}
+\newcommand{\Progressbar@BarHeight}{1}
+\newcommand{\Progressbar@BarColor}{white}
+\newcommand{\Progressbar@BarBorder}{black}
+\newcommand{\Progressbar@BarPosition}{10}
+
+\newcommand{\Progressbar@TodoA}{gray}
+\newcommand{\Progressbar@TodoB}{black}
+
+\newcommand{\Progressbar@DoneA}{PRINCETON_ORANGE}
+\newcommand{\Progressbar@DoneB}{YALE_BLUE}  
+
+\newcommand{\Progressbar@Direction}{RTL}
+
+\newcommand{\Progressbar@Completion}{50}
+
+\define@key{Progressbar}{BarWidth}[\Progressbar@BarWidth]{\renewcommand{\Progressbar@BarWidth}{#1}}
+\define@key{Progressbar}{BarHeight}[\Progressbar@BarHeight]{\renewcommand{\Progressbar@BarHeight}{#1}}
+\define@key{Progressbar}{BarColor}[\Progressbar@BarColor]{\renewcommand{\Progressbar@BarColor}{#1}}
+
+\define@key{Progressbar}{BarBorder}[\Progressbar@BarBorder]{\renewcommand{\Progressbar@BarBorder}{#1}}
+\define@key{Progressbar}{BarPosition}[\Progressbar@BarPosition]{\renewcommand{\Progressbar@BarPosition}{#1}}    
+\define@key{Progressbar}{TodoA}[\Progressbar@TodoA]{\renewcommand{\Progressbar@TodoA}{#1}}
+
+\define@key{Progressbar}{TodoB}[\Progressbar@TodoB]{\renewcommand{\Progressbar@TodoB}{#1}}
+\define@key{Progressbar}{DoneA}[\Progressbar@DoneA]{\renewcommand{\Progressbar@DoneA}{#1}}
+\define@key{Progressbar}{DoneB}[\Progressbar@DoneB]{\renewcommand{\Progressbar@DoneB}{#1}}
+
+\define@key{Progressbar}{Direction}[\Progressbar@Direction]{\renewcommand{\Progressbar@Direction}{#1}}
+\define@key{Progressbar}{Completion}[\Progressbar@Completion]{\renewcommand{\Progressbar@Completion}{#1}}
+
+\newcommand{\Progressbar}[1]%
+{  \setkeys{Progressbar}{#1}
+    % Progress Bars --------------------------------------------------
+	\begin{tikzpicture}[overlay, remember picture,shift={($(current page.south west)+(0.1,0.1)$)}]
+		\draw[draw=\Progressbar@BarBorder,ultra thick] (0,0) rectangle (\Progressbar@BarWidth,\Progressbar@BarHeight);          
+		\ifthenelse{\equal{\Progressbar@Direction}{LTR}}
+			{   \shade[left color=\Progressbar@TodoA,right color=\Progressbar@TodoB]%
+							(0,0)   rectangle (\Progressbar@BarWidth,\Progressbar@BarHeight);
+					\begin{scope}
+							\clip   (0,0) rectangle (\Progressbar@Completion * \Progressbar@BarWidth / 100,\Progressbar@BarHeight);
+							\shade[left color=\Progressbar@DoneA,right color=\Progressbar@DoneB]%
+									(0,0) rectangle (\Progressbar@BarWidth,\Progressbar@BarHeight);
+					\end{scope}
+			}
+			{   \shade[left color=\Progressbar@TodoB, right color=\Progressbar@TodoA]%
+							(0,0) rectangle (\Progressbar@BarWidth,\Progressbar@BarHeight);
+					\begin{scope}
+							\clip   ({(100-\Progressbar@Completion) * \Progressbar@BarWidth / 100},0)%
+									rectangle (\Progressbar@BarWidth,\Progressbar@BarHeight);
+							\shade[left color=\Progressbar@DoneB, right color=\Progressbar@DoneA]%
+									(0,0)   rectangle (\Progressbar@BarWidth,\Progressbar@BarHeight);               
+					\end{scope}
+			}
+		\ifthenelse{\equal{\insertpagenumber}{1}}{}{
+			\node[color=EGG_SHELL] at%
+					(\Progressbar@BarWidth / 100 * \Progressbar@BarPosition, \Progressbar@BarHeight / 2) {\Progressbar@Completion \% \ };
+			\node[color=lightgray] at%
+					(\Progressbar@BarWidth / 100 * 98, 0.3) {\insertframenumber /\inserttotalframenumber}; %:\insertpagenumber /\insertdocumentendpage
+		}
+	\end{tikzpicture}
+}
+\makeatother
+
+\logo{
+	\pgfmathsetmacro{\wid}{\the\paperwidth/28.45276-0.2}
+	\pgfmathtruncatemacro{\prog}{100*\insertpagenumber/\insertdocumentendpage}
+	\pgfmathtruncatemacro{\mybarpos}{\prog-1}
+	\Progressbar{BarWidth=\wid,%
+							 BarHeight=0.125,%
+							 BarColor=PRINCETON_ORANGE,% not used anymore
+							 BarBorder=none,%
+							 BarPosition=\mybarpos,%
+							 TodoA=BLACK_CHOCOLATE,% for gradient fade add different colors 
+							 TodoB=BLACK_CHOCOLATE,%
+							 DoneA=YALE_BLUE,% for gradient fade add different colors 
+							 DoneB=YALE_BLUE,%
+							 Completion=\prog,%
+							 Direction=LTR,%
+							 }
+  }
