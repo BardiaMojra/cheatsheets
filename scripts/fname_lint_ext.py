@@ -1,8 +1,6 @@
 
 import os
 srcDir = './'
-
-
 ext = '.pdf'
 print('\n\n\n rename files with extension: '+ext+'\n\n')
 # or
@@ -18,13 +16,17 @@ for i, file in enumerate(os.listdir(srcDir)):
     newfile = newfile.replace(',', '')
     newfile = newfile.replace('and', 'n')
     newfile = newfile.replace("'", '')
-    newfile = newfile.replace('-', '_')
+    #newfile = newfile.replace('-', '_')
     newfile = newfile.replace('__', '_')
     newfile = newfile.replace('__', '_')
     src = srcDir + file
     files.append(src)
-    #newfile = '_' + newfile
-    newfile = '_{:0>3d}_'.format(len(files)) + newfile
+    newfile = '_' + newfile
+    #newfile = '_{:0>3d}_'.format(len(files)) + newfile
+    newfile = newfile.replace('_icra_', '_ICRA_')
+    newfile = newfile.replace('_ral_', '_RAL_')
+    newfile = newfile.replace('_tor_', '_TOR_')
+    newfile = newfile.replace('_iros_', '_IROS_')
     newfile = newfile.replace('__', '_')
     dest = srcDir + newfile
     os.rename(src, dest)
