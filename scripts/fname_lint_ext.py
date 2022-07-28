@@ -23,7 +23,10 @@ for i, file in enumerate(os.listdir(srcDir)):
     newfile = newfile.replace('__', '_')
     src = srcDir + file
     files.append(src)
-    dest = srcDir + '_{:0>3d}_'.format(len(files)) + newfile
+    #newfile = '_' + newfile
+    newfile = '_{:0>3d}_'.format(len(files)) + newfile
+    newfile = newfile.replace('__', '_')
+    dest = srcDir + newfile
     os.rename(src, dest)
     #print(i, file)
   else:
