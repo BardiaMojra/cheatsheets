@@ -1,0 +1,19 @@
+name: QEKF
+channels:
+  - conda-forge
+  - anaconda
+  - defaults
+dependencies:
+  - python
+  - numpy
+  - scipy
+  - basemap
+  - quaternion # an extension to the C-based numpy lib
+  # - quaternionic # stand-alone pure python lib
+  - matplotlib
+  - pandas
+  - numba
+  - pip:
+      - pyqt5
+      # - xlrd
+      # - openpyxl
