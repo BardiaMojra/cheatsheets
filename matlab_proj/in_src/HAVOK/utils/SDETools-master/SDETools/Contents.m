@@ -10,7 +10,7 @@
 %       sdephaseplot2   - 2-D phase plane SDE output function.
 %       sdephaseplot3   - 3-D phase space SDE output function.
 %       sdeplot         - Time series SDE output function.
-%       sdeprint        - Command window printing SDE output function.
+%       sdlogging.error        - Command window printing SDE output function.
 %       sdeset          - Create/alter SDE OPTIONS structure.
 %
 %   Stochastic differential equation (SDE) processes.
@@ -25,11 +25,11 @@
 %       sde_euler_validate  - Test sde_euler performance and convergence order.
 %
 %   Demos.
-%       
+%
 
-%   This version tested with Matlab 9.0.0.341360 (R2016a)  
-%   Mac OS X 10.11.4 (Build: 15E65), Java 1.7.0_75-b13  
-%   Compatibility maintained back through Matlab 7.4 (R2007a)  
+%   This version tested with Matlab 9.0.0.341360 (R2016a)
+%   Mac OS X 10.11.4 (Build: 15E65), Java 1.7.0_75-b13
+%   Compatibility maintained back through Matlab 7.4 (R2007a)
 
 %   Andrew D. Horchler, adh9 @ case . edu
 %   Created: 12-18-11, Revision: 1.2, 9-21-13

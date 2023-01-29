@@ -1,36 +1,36 @@
-function status=sdeprint(t,y,flag,w)
-%SDEPRINT  Command window printing SDE output function.
-%   When the function SDEPRINT is passed to an SDE solver as the 'OutputFUN'
-%   property, i.e., OPTIONS = SDESET('OutputFUN',@SDEPRINT), the solver calls 
-%   SDEPRINT(T,Y,'') after every timestep. The SDEPRINT function prints the
+function status=sdlogging.error(t,y,flag,w)
+%SDlogging.error  Command window printing SDE output function.
+%   When the function SDlogging.error is passed to an SDE solver as the 'OutputFUN'
+%   property, i.e., OPTIONS = SDESET('OutputFUN',@SDlogging.error), the solver calls
+%   SDlogging.error(T,Y,'') after every timestep. The SDlogging.error function prints the
 %   components of the solution, Y, as they are computed. If more than 16
 %   components are specified, an abreviated output is given. To print only
 %   particular components of the solution, specify their indices via the
 %   'OutputYSelect' SDE options property.
 %
-%   At the start of integration, the solver calls SDEPRINT(TSPAN,Y0,'init') to
+%   At the start of integration, the solver calls SDlogging.error(TSPAN,Y0,'init') to
 %   initialize the output function. After each integration step to new time, T,
-%   and solution vector, Y, the solver calls STATUS = SDEPRINT(T,Y,''). If the
+%   and solution vector, Y, the solver calls STATUS = SDlogging.error(T,Y,''). If the
 %   solver's 'Refine' property is greater than one (see SDESET), T is the most
 %   recent output time and Y is the corresponding column vector. The STATUS
 %   return value is 1. When the integration is complete, the solver calls
-%   SDEPRINT([],[],'done').
+%   SDlogging.error([],[],'done').
 %
 %   Set the 'OutputWSelect' SDE options property to 'yes' or to a vector of
 %   indices to output the integrated Wiener increments, W. The integrated Wiener
-%   increments are passed to SDEPRINT as a fourth argument, SDEPRINT(T,Y,'',W).
+%   increments are passed to SDlogging.error as a fourth argument, SDlogging.error(T,Y,'',W).
 %   If the 'OutputWSelect' property is set to 'yes' or a non-empty vector of
-%   indices the solver calls SDEPRINT(TSPAN,Y0,'init',W0) to initialize the
-%   output function at the start of integration and SDEPRINT([],[],'done',[])
+%   indices the solver calls SDlogging.error(TSPAN,Y0,'init',W0) to initialize the
+%   output function at the start of integration and SDlogging.error([],[],'done',[])
 %   when the integration is complete.
 %
 %   The display format of the printed output can be changed via FORMAT.
-%   
+%
 %   See also:
 %       SDEPLOT, SDEPHASEPLOT2, SDEPHASEPLOT3, SDEIMGPLOT, SDESET, SDEGET,
-%       SDE_EULER, SDE_MILSTEIN, SDE_BM, SDE_GBM, SDE_OU, ODEPRINT, FORMAT
+%       SDE_EULER, SDE_MILSTEIN, SDE_BM, SDE_GBM, SDE_OU, ODlogging.error, FORMAT
 
-%   SDEPRINT is based on an updating of Matlab's ODEPRINT, version 1.17.4.4
+%   SDlogging.error is based on an updating of Matlab's ODlogging.error, version 1.17.4.4
 
 %   Andrew D. Horchler, adh9 @ case . edu, 5-11-13
 %   Revision: 1.2, 5-13-13
@@ -49,22 +49,22 @@ switch flag
     case 'init'
         % Number of time samples to expect
         LEN_TSPAN = length(t);
-        
+
         % Number of solution variables, Y (cannot change)
         N = length(y);
-        
+
         % Allocate blank array for output text, char(10) is '\n'
         sp = ' ';
         ln = [sp(ones(60,1));10];
         if isW
             % Number of integrated Wiener increment variables, W (cannot change)
             D = length(w);
-            
+
             STR = ln(:,ones(1,min(max(N,D),17)+5));
         else
         	STR = ln(:,ones(1,min(N,17)+5));
         end
-        
+
         % Get output format
         isDouble = isa(y,'double');
         switch get(0,'format')
@@ -103,25 +103,25 @@ switch flag
             otherwise
                 FSTR = '% -.15g';
         end
-        
+
         strout = STR;
-        
+
         % Progress bar
         strout(1,2) = '[';
         strout(end-9:end-2,2) = ']   0.0%';
-        
+
         % Time
         tout = sprintf([' T = ' FSTR],t(1));
         strout(1:length(tout),4) = tout;
-        
+
         % Step number
         ITERATION = 0;
         tout = sprintf(' Step = %d',ITERATION);
         strout(31:30+length(tout),4) = tout;
-        
+
         % Divider
         strout(1:end-2,5) = '-';
-        
+
         % Y
         if N >= 1
             yout = sprintf([' Y = ' FSTR],y(1));
@@ -144,12 +144,12 @@ switch flag
                     end
                 end
             end
-            
+
             offset = 30;
         else
             offset = 0;
         end
-        
+
         % W
         if isW && D >= 1
             wout = sprintf([' W = ' FSTR],w(1));
@@ -173,35 +173,35 @@ switch flag
                 end
             end
         end
-        
+
         % Print text, pass as string to handle '%' and '\n' characters
         nchars = fprintf(1,'%s',strout(:));
-        
+
         % Allocate array of backspace characters to be used to overwrite text
         BSSTR = bs(ones(nchars,1));
-        
+
         % Get and set state of lastwarn so warning can be caught
-        [lastmsg,lastid] = lastwarn('','SDETools:sdeprint:CatchWarning');
-        
+        [lastmsg,lastid] = lastwarn('','SDETools:sdlogging.error:CatchWarning');
+
         % Persistent cleanup function to ensure lastwarn reset to original state
         C = onCleanup(@()lastwarn(lastmsg,lastid));
     case ''
         if isempty(LEN_TSPAN) || isempty(STR)
             if isW
-                error('SDETools:sdeprint:NotCalledWithInitW',...
+                error('SDETools:sdlogging.error:NotCalledWithInitW',...
                      ['Output function has not been initialized. Use syntax '...
                       'OutputFUN(TSPAN,Y0,''init'',W0).']);
             else
-                error('SDETools:sdeprint:NotCalledWithInit',...
+                error('SDETools:sdlogging.error:NotCalledWithInit',...
                      ['Output function has not been initialized. Use syntax '...
                       'OutputFUN(TSPAN,Y0,''init'').']);
 
             end
         end
-        
+
         % Blank out previous data with spaces
         strout = STR;
-        
+
         % Progress bar
         ITERATION = ITERATION+1;
         pct = ITERATION/LEN_TSPAN;
@@ -210,24 +210,24 @@ switch flag
         strout(end-9:end-2,2) = ']      %';
         pctout = sprintf('%.1f',100*pct);
         strout(end-2-length(pctout):end-3,2) = pctout;
-        
+
         % Time
         tout = sprintf([' T = ' FSTR],t(end));
         strout(1:length(tout),4) = tout;
-        
+
         % Step number
         tout = sprintf(' Step = %d',ITERATION);
         strout(31:30+length(tout),4) = tout;
-        
+
         % Divider
         strout(1:end-2,5) = '-';
-        
+
         % Y
         N = length(y);
         if N >= 1
             yout = sprintf([' Y = ' FSTR],y(1,end));
             strout(1:length(yout),6) = yout;
-            
+
             if N > 1
                 ystr = ['     ' FSTR];
                 if N > 16
@@ -245,12 +245,12 @@ switch flag
                     end
                 end
             end
-            
+
             offset = 30;
         else
             offset = 0;
         end
-        
+
         % W
         if isW
             D = length(w);
@@ -277,20 +277,20 @@ switch flag
                 end
             end
         end
-        
+
         % Catch warnings so they are not overwritten
         [msg,msgid] = lastwarn;	%#ok<*ASGLU>
-        if ~strcmp(msgid,'SDETools:sdeprint:CatchWarning')
+        if ~strcmp(msgid,'SDETools:sdlogging.error:CatchWarning')
             % Reset state of lastwarn
-            lastwarn('','SDETools:sdeprint:CatchWarning');
-            
+            lastwarn('','SDETools:sdlogging.error:CatchWarning');
+
             % Empty backspace array so warning(s) not overwritten
             bsout = [];
         else
             % Backspace array to overwrite previous text
             bsout = BSSTR;
         end
-        
+
         % Simultaneously overwrite (backspace) previous text and print new text
         fprintf(1,'%s',[bsout;strout(:)]);
     case 'done'
@@ -298,6 +298,6 @@ switch flag
             fprintf(1,'\n');
         end
     otherwise
-        error('SDETools:sdeprint:InvalidFlag',...
+        error('SDETools:sdlogging.error:InvalidFlag',...
               'Invalid status flag passed to output function.');
 end

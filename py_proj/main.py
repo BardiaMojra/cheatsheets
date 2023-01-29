@@ -78,8 +78,8 @@ def main():
         print('\n\n\n'+lhead+'> '+str(i)+': '+datasets[i])
         run(datasets[i])
     elif tnum not in range(len(datasets)):
-      eprint('usr input (int) is out of range. datasets[] range: 0-'+str(len(datasets)-1))
-      eprint('usr input: '+str(tnum))
+      logging.error('usr input (int) is out of range. datasets[] range: 0-'+str(len(datasets)-1))
+      logging.error('usr input: '+str(tnum))
       exit()
     else:
       print(shead+'user input (int): '+str(tnum)+' ---> '+datasets[tnum])

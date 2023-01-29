@@ -91,7 +91,7 @@ class configuration(object):
     else:
       if needEmpty == True:
         print("DOES EXIST: \n" + subdir)
-        eprint("SUBDIR CONFLICT!!!")
+        logging.error("SUBDIR CONFLICT!!!")
         exit()
       else:
         print("DOES EXIST: \n" + subdir)
@@ -108,7 +108,7 @@ class configuration(object):
           print("DOES NOT EXIST: {} \n".format(k)+getattr(self, k)+"\n")
           os.makedirs(getattr(self, k))
         else:
-          eprint("subdir exists, but it should not!!!")
+          logging.error("subdir exists, but it should not!!!")
           exit()
     return
 
@@ -125,7 +125,7 @@ class configuration(object):
               if not prop.startswith("__") and not isinstance(prop, configuration):
                 f.write("  {}: {} \n".format(prop, getattr(self, prop)))
         else:
-          eprint("cfg_file EXISTS, but it should not!!!")
+          logging.error("cfg_file EXISTS, but it should not!!!")
           exit()
     return
 
@@ -139,7 +139,7 @@ class configuration(object):
           with open(getattr(self, k), 'a') as f:
             f.write("Notes: \n")
         else:
-          eprint("notes_file EXISTS, but it should not!!!")
+          logging.error("notes_file EXISTS, but it should not!!!")
           exit()
     return
 
@@ -153,7 +153,7 @@ class configuration(object):
           with open(getattr(self, k), 'a') as f:
             f.write("{} \n".format(", ".join(getattr(self, "st_labs"))))
         else:
-          eprint("notes_file EXISTS, but it should not!!!")
+          logging.error("notes_file EXISTS, but it should not!!!")
           exit()
     return
 
@@ -167,7 +167,7 @@ class configuration(object):
           print("DOES NOT EXIST: \n"+k)
           os.makedirs(k)
         else:
-          eprint("subdir exists, but it should not!!!")
+          logging.error("subdir exists, but it should not!!!")
           exit()
     return
 

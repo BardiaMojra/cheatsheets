@@ -29,9 +29,9 @@ function status=sdephaseplot2(t,y,flag,w)
 %   SDEPHASEPLOT2(TSPAN,Y0,'init',W0) to initialize the output function at the
 %   start of integration and SDEPHASEPLOT2([],[],'done',[]) when the integration
 %   is complete.
-%   
+%
 %   See also:
-%       SDEPLOT, SDEPHASEPLOT3, SDEIMGPLOT, SDEPRINT, SDESET, SDEGET, SDE_EULER,
+%       SDEPLOT, SDEPHASEPLOT3, SDEIMGPLOT, SDlogging.error, SDESET, SDEGET, SDE_EULER,
 %       SDE_MILSTEIN, SDE_BM, SDE_GBM, SDE_OU, ODEPHAS2
 
 %   SDEPHASEPLOT2 is based on an updating of Matlab's ODEPHAS2, version 1.26.4.9
@@ -52,33 +52,33 @@ switch flag
         % Initialize persitent handle variables
         FIG_HANDLE = figure(gcf);
         AX_HANDLE = gca;
-        
+
         % Set units to pixels to get width of axis, set back to default
         units = get(AX_HANDLE,'Units');
         set(AX_HANDLE,'Units','Pixels');
         pos = get(AX_HANDLE,'OuterPosition');
         set(AX_HANDLE,'Units',units);
-        
+
         % Number of time samples to expect
         LEN_TSPAN = length(t);
-        
+
         % Use figure axis width and TSPAN length determine redraw chunk
         chunk = min(ceil(LEN_TSPAN/pos(3)),LEN_TSPAN);
-        
+
         % Number of solution variables, Y (cannot change)
         N = length(y);
-        
+
         % Initialize UserData and Y
         ud = [];
         ud.y(2,chunk) = 0;
         ud.i = 1;
-        
+
         if N >= 2
             ud.y(:,1) = y(1:2);
         elseif isW
             % Number of integrated Wiener increment variables, W (cannot change)
             D = length(w);
-            
+
             if D+N >= 2
                 if N == 1
                     ud.y(:,1) = [y(1);w(1)];
@@ -95,17 +95,17 @@ switch flag
             	 ['Output function requires at least two solution '...
                   'components from Y.']);
         end
-        
+
         % Plot initial data
         ud.lines = plot(ud.y(1),ud.y(2),'-');
-        
+
         % Plot start and end markers
         nextplot = get(AX_HANDLE,'NextPlot');
         set(AX_HANDLE,'NextPlot','add');
         plot(AX_HANDLE,ud.y(1),ud.y(2),'g.');
         ud.marker = plot(AX_HANDLE,ud.y(1),ud.y(2),'r.');
         set(AX_HANDLE,'NextPlot',nextplot);
-        
+
         % Store UserData and draw
         set(FIG_HANDLE,'UserData',ud);
         drawnow;
@@ -122,7 +122,7 @@ switch flag
 
             end
         end
-        
+
         % If figure is open
         if ishghandle(FIG_HANDLE) && ishghandle(AX_HANDLE)
             % Get UserData
@@ -130,7 +130,7 @@ switch flag
             lt = length(t);
             N = size(y,1);
             lY = size(ud.y,2);
-            
+
             % Update UserData
             oldi = ud.i;
             newi = oldi+lt;
@@ -139,16 +139,16 @@ switch flag
                 XYData = get(ud.lines,{'XData','YData'});
                 set(ud.lines,{'XData','YData'},{[XYData{1} ud.y(1,:)],...
                                                 [XYData{2} ud.y(2,:)]});
-                
+
                 % Set marker point
                 set(ud.marker,{'XData','YData'},{ud.y(1,end),ud.y(2,end)});
-                
+
                 % Reset UserData
                 ud.y(:,lY) = 0;
                 oldi = 0;
                 newi = lt;
             end
-            
+
             % Append new data to UserData
             if N >= 2
                 ud.y(:,oldi+1:newi) = y(1:2,:);
@@ -158,7 +158,7 @@ switch flag
                 ud.y(:,oldi+1:newi) = w(1:2,:);
             end
             ud.i = newi;
-            
+
             % Store updated UserData and draw if redraw chunk was full
             set(FIG_HANDLE,'UserData',ud);
             if oldi == 0
@@ -173,24 +173,24 @@ switch flag
         FIG_HANDLE = [];
         ha = AX_HANDLE;
         AX_HANDLE = [];
-        
+
         % If figure is open
         if ~isempty(hf) && ishghandle(hf) && ~isempty(ha) && ishghandle(ha)
             % Get non-zero UserData
             ud = get(hf,'UserData');
             ud.y = ud.y(:,1:ud.i);
-            
+
             % Set any remaining line data
             XYData = get(ud.lines,{'XData','YData'});
          	set(ud.lines,{'XData','YData'},{[XYData{1} ud.y(1,:)],...
                                             [XYData{2} ud.y(2,:)]});
-            
+
             % Set final marker point
           	set(ud.marker,{'XData','YData'},{ud.y(1,end),ud.y(2,end)});
-            
+
             % Delete UserData
             set(hf,'UserData',[]);
-            
+
             % Refresh or draw
             if ishold(ha)
                 drawnow;

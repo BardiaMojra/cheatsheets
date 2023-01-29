@@ -18,7 +18,7 @@ class dlm:
       self.P_hist = None # state estimation covar posterior history
       self.K_hist = None # Kalman gain matrix history
     else:
-      eprint('Warning: data logger is DISABLED...\n\n')
+      logging.error('Warning: data logger is DISABLED...\n\n')
     return
 
   def log_z_state(self, z, idx):
