@@ -6,21 +6,27 @@ channels:
   - defaults
   
 dependencies:
-  - python
+  - python=3.10
   - numpy
+  - pandas
+  - pytest
+  - matplotlib
+  - pip:
+      - tensorflow
+      - keras
+  # - gxx_linux-64==11.1.0
+  #- cudatoolkit=11.2
+  #- cudnn=8.1.0
   - scipy
   - basemap
   - numpy-quaternion
-  - matplotlib
-  - pandas
-  - cudatoolkit
   - numba
-  - pip:
-      - h5py
-      - pyquaternion
-      - pyqt5
-      - xlrd
-      - openpyxl
+#  - pip:
+#      - h5py
+#      - pyquaternion
+#      - pyqt5
+#      - xlrd
+#      - openpyxl
 
 variables:
   VAR1: valueA
